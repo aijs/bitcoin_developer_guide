@@ -28,7 +28,7 @@ Bob 提供给 Alice 公钥哈希。公钥哈希通过编码后就得到了比特
 
 Once Alice has the [address](https://bitcoin.org/en/glossary/address) and decodes it back into a standard hash, she can create the first transaction. She creates a standard P2PKH transaction [output](https://bitcoin.org/en/glossary/output) containing instructions which allow anyone to spend that [output](https://bitcoin.org/en/glossary/output) if they can prove they control the [private key](https://bitcoin.org/en/glossary/private-key) corresponding to Bob’s hashed [public key](https://bitcoin.org/en/glossary/public-key). These instructions are called the [pubkey script](https://bitcoin.org/en/glossary/pubkey-script) or [scriptPubKey](https://bitcoin.org/en/glossary/pubkey-script).
 
-Alice得到了地址后，
+Alice得到了地址并将地址反编译
 
 Alice broadcasts the transaction and it is added to the[block chain](https://bitcoin.org/en/glossary/block-chain). The[network](https://bitcoin.org/en/developer-guide#term-network)categorizes it as an Unspent Transaction[Output](https://bitcoin.org/en/glossary/output)\([UTXO](https://bitcoin.org/en/glossary/unspent-transaction-output)\), and Bob’s[wallet](https://bitcoin.org/en/glossary/wallet)software displays it as a spendable balance.
 
@@ -51,6 +51,4 @@ Bob’s[secp256k1 signature](https://bitcoin.org/en/glossary/signature)doesn’t
 As illustrated in the figure above, the data Bob signs includes the[txid](https://bitcoin.org/en/glossary/txid)and[output index](https://bitcoin.org/en/developer-guide#term-output-index)of the previous transaction, the previous[output’s](https://bitcoin.org/en/glossary/output)[pubkey script](https://bitcoin.org/en/glossary/pubkey-script), the[pubkey script](https://bitcoin.org/en/glossary/pubkey-script)Bob creates which will let the next recipient spend this transaction’s[output](https://bitcoin.org/en/glossary/output), and the amount of[satoshis](https://bitcoin.org/en/glossary/denominations)to spend to the next recipient. In essence, the entire transaction is signed except for any[signature scripts](https://bitcoin.org/en/glossary/signature-script), which hold the full[public keys](https://bitcoin.org/en/glossary/public-key)and[secp256k1 signatures](https://bitcoin.org/en/glossary/signature).
 
 After putting his[signature](https://bitcoin.org/en/glossary/signature)and[public key](https://bitcoin.org/en/glossary/public-key)in the[signature script](https://bitcoin.org/en/glossary/signature-script), Bob broadcasts the transaction to Bitcoin[miners](https://bitcoin.org/en/glossary/mining)through the[peer-to-peer network](https://bitcoin.org/en/developer-guide#term-network). Each[peer](https://bitcoin.org/en/glossary/node)and[miner](https://bitcoin.org/en/glossary/mining)independently validates the transaction before broadcasting it further or attempting to include it in a new[block](https://bitcoin.org/en/glossary/block)of transactions.
-
-
 
