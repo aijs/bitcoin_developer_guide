@@ -26,3 +26,31 @@ Bob 必须在 Alice 能够发给他交易前就生成一对私有/公开密钥�
 
 Bob 提供给 Alice 公钥哈希。公钥哈希通过编码后就得到了比特币地址，使用 base58 编码得到的字符串包含了一个地址版本数字、哈希值和一个错误校验的校验和用来捕获错别字。比特币地址可以通过任何媒介传播，包括单向媒介从而省去了消费者与接收者间的沟通，它可以之后编码为任何其他格式，比如一个包含了 `bitcoin:` URI 的二维码。
 
+Once Alice has the [address](https://bitcoin.org/en/glossary/address) and decodes it back into a standard hash, she can create the first transaction. She creates a standard P2PKH transaction [output](https://bitcoin.org/en/glossary/output) containing instructions which allow anyone to spend that [output](https://bitcoin.org/en/glossary/output) if they can prove they control the [private key](https://bitcoin.org/en/glossary/private-key) corresponding to Bob’s hashed [public key](https://bitcoin.org/en/glossary/public-key). These instructions are called the [pubkey script](https://bitcoin.org/en/glossary/pubkey-script) or [scriptPubKey](https://bitcoin.org/en/glossary/pubkey-script).
+
+Alice得到了地址后，
+
+Alice broadcasts the transaction and it is added to the[block chain](https://bitcoin.org/en/glossary/block-chain). The[network](https://bitcoin.org/en/developer-guide#term-network)categorizes it as an Unspent Transaction[Output](https://bitcoin.org/en/glossary/output)\([UTXO](https://bitcoin.org/en/glossary/unspent-transaction-output)\), and Bob’s[wallet](https://bitcoin.org/en/glossary/wallet)software displays it as a spendable balance.
+
+When, some time later, Bob decides to spend the[UTXO](https://bitcoin.org/en/glossary/unspent-transaction-output), he must create an[input](https://bitcoin.org/en/glossary/input)which references the transaction Alice created by its hash, called a[Transaction Identifier](https://bitcoin.org/en/glossary/txid)\([txid](https://bitcoin.org/en/glossary/txid)\), and the specific[output](https://bitcoin.org/en/glossary/output)she used by its index number \([output index](https://bitcoin.org/en/developer-guide#term-output-index)\). He must then create a[signature script](https://bitcoin.org/en/glossary/signature-script)—a collection of data parameters which satisfy the conditions Alice placed in the previous[output’s](https://bitcoin.org/en/glossary/output)[pubkey script](https://bitcoin.org/en/glossary/pubkey-script).[Signature scripts](https://bitcoin.org/en/glossary/signature-script)are also called[scriptSigs](https://bitcoin.org/en/glossary/signature-script).
+
+[Pubkey scripts](https://bitcoin.org/en/glossary/pubkey-script)and[signature scripts](https://bitcoin.org/en/glossary/signature-script)combine[secp256k1](http://www.secg.org/sec2-v2.pdf)[pubkeys](https://bitcoin.org/en/glossary/public-key)and[signatures](https://bitcoin.org/en/glossary/signature)with conditional logic, creating a programmable authorization mechanism.
+
+![](https://bitcoin.org/img/dev/en-unlocking-p2pkh-output.svg)
+
+For a P2PKH-style[output](https://bitcoin.org/en/glossary/output), Bob’s[signature script](https://bitcoin.org/en/glossary/signature-script)will contain the following two pieces of data:
+
+1. His full \(unhashed\)[public key](https://bitcoin.org/en/glossary/public-key), so the[pubkey script](https://bitcoin.org/en/glossary/pubkey-script)can check that it hashes to the same value as the[pubkey hash](https://bitcoin.org/en/glossary/p2pkh-address)provided by Alice.
+
+2. An[secp256k1](http://www.secg.org/sec2-v2.pdf)[signature](https://bitcoin.org/en/glossary/signature)made by using the[ECDSA](https://en.wikipedia.org/wiki/Elliptic_Curve_DSA)cryptographic formula to combine certain transaction data \(described below\) with Bob’s[private key](https://bitcoin.org/en/glossary/private-key). This lets the[pubkey script](https://bitcoin.org/en/glossary/pubkey-script)verify that Bob owns the[private key](https://bitcoin.org/en/glossary/private-key)which created the[public key](https://bitcoin.org/en/glossary/public-key).
+
+Bob’s[secp256k1 signature](https://bitcoin.org/en/glossary/signature)doesn’t just prove Bob controls his[private key](https://bitcoin.org/en/glossary/private-key); it also makes the non-[signature](https://bitcoin.org/en/glossary/signature)-script parts of his transaction tamper-proof so Bob can safely broadcast them over the[peer-to-peer network](https://bitcoin.org/en/developer-guide#term-network).
+
+![](https://bitcoin.org/img/dev/en-signing-output-to-spend.svg)
+
+As illustrated in the figure above, the data Bob signs includes the[txid](https://bitcoin.org/en/glossary/txid)and[output index](https://bitcoin.org/en/developer-guide#term-output-index)of the previous transaction, the previous[output’s](https://bitcoin.org/en/glossary/output)[pubkey script](https://bitcoin.org/en/glossary/pubkey-script), the[pubkey script](https://bitcoin.org/en/glossary/pubkey-script)Bob creates which will let the next recipient spend this transaction’s[output](https://bitcoin.org/en/glossary/output), and the amount of[satoshis](https://bitcoin.org/en/glossary/denominations)to spend to the next recipient. In essence, the entire transaction is signed except for any[signature scripts](https://bitcoin.org/en/glossary/signature-script), which hold the full[public keys](https://bitcoin.org/en/glossary/public-key)and[secp256k1 signatures](https://bitcoin.org/en/glossary/signature).
+
+After putting his[signature](https://bitcoin.org/en/glossary/signature)and[public key](https://bitcoin.org/en/glossary/public-key)in the[signature script](https://bitcoin.org/en/glossary/signature-script), Bob broadcasts the transaction to Bitcoin[miners](https://bitcoin.org/en/glossary/mining)through the[peer-to-peer network](https://bitcoin.org/en/developer-guide#term-network). Each[peer](https://bitcoin.org/en/glossary/node)and[miner](https://bitcoin.org/en/glossary/mining)independently validates the transaction before broadcasting it further or attempting to include it in a new[block](https://bitcoin.org/en/glossary/block)of transactions.
+
+
+
