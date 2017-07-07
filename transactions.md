@@ -28,7 +28,7 @@ Bob 提供给 Alice 公钥哈希。公钥哈希通过编码后就得到了比特
 
 Once Alice has the [address](https://bitcoin.org/en/glossary/address) and decodes it back into a standard hash, she can create the first transaction. She creates a standard P2PKH transaction [output](https://bitcoin.org/en/glossary/output) containing instructions which allow anyone to spend that [output](https://bitcoin.org/en/glossary/output) if they can prove they control the [private key](https://bitcoin.org/en/glossary/private-key) corresponding to Bob’s hashed [public key](https://bitcoin.org/en/glossary/public-key). These instructions are called the [pubkey script](https://bitcoin.org/en/glossary/pubkey-script) or [scriptPubKey](https://bitcoin.org/en/glossary/pubkey-script).
 
-Alice得到了地址并将地址反编译成标准的hash，她便可以创建第一笔交易了。她创建了一笔标准的P2PKH的交易。
+Alice得到了地址并将地址反编译成标准的hash，她便可以创建第一笔交易了。她创建了一笔标准的P2PKH的交易输出，该交易输出包含一些规则要求：允许任何人花费该交易输出，只要他们能够证明他们拥有与Bob公钥相符的私钥。这些规则要求就称为pubkey script或者scriptPubkey。
 
 Alice broadcasts the transaction and it is added to the[block chain](https://bitcoin.org/en/glossary/block-chain). The[network](https://bitcoin.org/en/developer-guide#term-network)categorizes it as an Unspent Transaction[Output](https://bitcoin.org/en/glossary/output)\([UTXO](https://bitcoin.org/en/glossary/unspent-transaction-output)\), and Bob’s[wallet](https://bitcoin.org/en/glossary/wallet)software displays it as a spendable balance.
 
